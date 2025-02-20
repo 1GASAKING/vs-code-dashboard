@@ -50,7 +50,9 @@
                 <span class="smalltext">pro</span>
               </div>
 
-              <div class="buttonField">upgrade to pro</div>
+              <div class="buttonField" onclick="ClosModal(true)">
+                upgrade to pro
+              </div>
             </span>
             <div>
               <button class="buttonField">
@@ -130,13 +132,41 @@
         </div>
       </div>
 
+      <div class="modal" id="modal">
+        <span class="closeModal" onclick="ClosModal(false)"
+          ><i class="fa fa-times" aria-hidden="true"></i
+        ></span>
+
+        <div class="modalBody">
+          <h1>Choose plan</h1>
+          <div class="modalContent">
+            <div class="plan">
+              <span class="mostPopular">Most popular</span>
+
+              <h1>year plan</h1>
+              <p>49.99/<span>year</span></p>
+              <button onclick="ChekOut('price_1QU7e0HHcvRSE91FWfsNMTGb')">
+                chekout <span class="discount"> 58% Off</span>
+              </button>
+            </div>
+            <div class="plan">
+              <h1>month plan</h1>
+              <p>9.99/<span>month</span></p>
+              <button onclick="ChekOut('price_1QU7PgHHcvRSE91FcTzuytSc')">
+                chekout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- 
       <div>
         <form title="login">
           <div>
             <label> email </label>
             <input class="inputField" name="email" title="email" type="email" />
             <label> password </label>
-
             <input
               class="inputField"
               name="password"
@@ -144,10 +174,82 @@
               type="password"
             />
           </div>
-
           <button type="submit" class="loginbtn">Login</button>
         </form>
       </div>
+      -->
+    
     </main>
   </body>
+  <script>
+    var userId = "01432707bd1676fc7f18d3b7dc41d218";
+    var email = "rodrigo.valencia@epm.com.co";
+    function ClosModal(state) {
+      var modal = document.getElementById("modal");
+      if (modal) {
+        modal.style.display = state ? "flex" : "none";
+      }
+    }
+    function getCredentials() {
+      console.log("jjfjf");
+
+      data = {
+        user_id: "userId",
+        email: "email",
+        vscode_version: "0.1.31",
+      };
+
+      fetch("https://backend.withsix.co/vs-code/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: userId,
+          email: email,
+          vscode_version: "0.1.31",
+        }),
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    getCredentials();
+    function ChekOut(price_Id) {
+
+      data = {
+        user_id: "userId",
+        email: "email",
+        vscode_version: "0.1.31",
+      };
+
+      fetch("https://backend.withsix.co/payment/create_checkout_url", {
+        method: "POST",
+        body: {
+          name: email,
+          email: email,
+          price_id: price_Id,
+          user_id: userId,
+          payment_type: "stripe",
+        },
+
+        headers: {
+          "Content-Type": "application/json",
+          
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  </script>
 </html>
