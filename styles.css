@@ -65,10 +65,15 @@ button:hover {
   max-width: 1700px;
   margin: 0 auto;
   flex-wrap: wrap;
+  
 }
 .left {
   width: 30%;
   max-width: 500px;
+  
+}
+ .left >div{
+  min-width:250px ;
 }
 .right {
   flex: 1;
@@ -119,6 +124,7 @@ button:hover {
 }
 .nameIcon {
   width: 34px;
+  min-width: 34px;
   height: 34px;
   font-size: 28px;
   font-weight: 900;
